@@ -63,5 +63,32 @@ selector 使用流程
 ## 详解NIO Channel类
     对应到不同的网络传输协议类型，在Java中都有不同的NIO Channel（通道）相对应
     
+## Reactor 反应器模式
 
+    reacotr模式是高性能网络编程在设计和架构层面的基础模式
+    Reactor（反应器）模式是高并发的重要基础原理
+    
+### Reacotr 模式的组成
+* reactor 反应器线程 负责响应IO事件，负责分发到 对应的handler 处理器
+* handler 处理器 非阻塞的处理业务
+
+
+### 单线程版的reactor反应器模式
+    reactor 和  handler 在同一个线程里
+    
+### 实战: 多线程版本的reactor反应器
+
+     1、 引入多个selector选择器
+     2、 设计一个新的子反应器类，一个子反应器负责查询一个selector的查询分发
+     3、 开启多个处理线程，一个处理线程负责执行一个反应器分发
+     4、 进行IO事件的隔离 不同的IO事件用不同的handler 
+     
+     SubReactor： 子反应器类 主要负责OP_Accept 事件的查询和分发，防止复杂的IO
+     操作导致 新连接事件的查询延迟
+     
+     5、 将IO事件的查询，分发和处理线程隔离，具体说就是将handler处理的线程不放在和
+     reactor反应器相关的线程绑定在一起，
+     
+     MultiThreadEchoServerReactor  多线程版本反应器
+     MultiThreadEchoHandler 多线程版本的回显处理器
 

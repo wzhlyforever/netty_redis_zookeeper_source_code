@@ -53,7 +53,7 @@ public class NioSendClient {
 
       }
 
-      FileChannel fileChannel = new FileInputStream(file).getChannel();    //
+      FileChannel fileChannel = new FileInputStream(file).getChannel();    // fileChannel 从通道中读取， 并写入到缓冲区
 
       SocketChannel socketChannel = SocketChannel.open();
       socketChannel.setOption(StandardSocketOptions.TCP_NODELAY, true);
